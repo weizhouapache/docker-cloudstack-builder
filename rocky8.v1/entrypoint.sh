@@ -1,6 +1,7 @@
 #!/bin/bash -x
 
 # Print system information
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk/
 mvn -version
 java --version
 javac -version
@@ -12,6 +13,7 @@ BUILD_OPTS_DEFAULT="-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsyste
 SOURCE=${SOURCE:-}
 VERSION=${VERSION:-}
 BUILD_OPTS=${BUILD_OPTS:-$BUILD_OPTS_DEFAULT}
+PACKAGE_OPTS=${PACKAGE_OPTS:-}
 
 if [[ $SOURCE =~ http.* ]] || [[ $SOURCE =~ git.* ]]; then
     if [ -d "$SOURCE_DIR" ]; then
@@ -34,9 +36,9 @@ if [ ! -z "$VERSION" ]; then
 fi
 
 # Packaging
-ACS_BUILD_OPTS=$BUILD_OPTS packaging/build-deb.sh
+FLAGS=$BUILD_OPTS packaging/package.sh -d centos8 $PACKAGE_OPTS
 
-mv $SOURCE_DIR/../cloudstack-*.deb $OUTPUT_DIR
+mv $SOURCE_DIR/dist/rpmbuild/RPMS/x86_64/cloudstack-*.rpm $OUTPUT_DIR
 if [[ $SOURCE =~ http.* ]] || [[ $SOURCE =~ git.* ]]; then
     rm -rf $SOURCE_DIR
 fi

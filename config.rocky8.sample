@@ -3,7 +3,7 @@
 REPO=weizhouapache/cloudstack-builder
 
 # The name of the image
-IMAGE=ubuntu2204.v1
+IMAGE=rocky8.v1
 
 # The source directory or git repository
 # This will be mounted or cloned to /source the docker container.
@@ -20,6 +20,10 @@ VERSION=main
 # The default value for is "-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware"
 # Please refer to https://github.com/weizhouapache/docker-cloudstack-builder/blob/main/README.md
 BUILD_OPTS=
+
+# The options for `package.sh` (RPM only)
+# Please refer to https://github.com/apache/cloudstack/blob/main/packaging/package.sh
+PACKAGE_OPTS=
 
 # Please set to sudo if use a non-root user	
 SUDO=

@@ -86,6 +86,9 @@ if [ "$DRY_RUN" = "yes" ];then
     echo "COMMAND is: ${COMMAND}"
 else
     echo "Running command: ${COMMAND}"
+    NOW="$(date +'%Y%m%d-%H%M%S')"
     ${COMMAND}
+    $SUDO docker stop $CONTAINER_NAME || true
+    $SUDO docker logs $CONTAINER_NAME > $NOW-$CONTAINER_NAME.log
     $SUDO docker rm $CONTAINER_NAME
 fi

@@ -6,8 +6,8 @@ This repository maintains the Dockerfile and scripts to build Apache CloudStack 
 
 | **Dockerfile**      |   **CloudStack versions**     |  **Note**            |
 |---------------------|-------------------------------|----------------------|
-| ubuntu2204.v1       | 4.18.x, 4.19.x                | For Ubuntu distros   |
-| rocky8.v1           | 4.18.x, 4.19.x                | For RHEL/Rocky Linux/AlmaLinux/OracleLinux distros   |
+| ubuntu2204.v1       | 4.18.x, 4.19.x                | DEB packages for Ubuntu distros   |
+| rocky8.v1           | 4.18.x, 4.19.x                | RPM packages for RHEL/Rocky Linux/AlmaLinux/OracleLinux distros   |
 
 ## Usage
 
@@ -30,13 +30,16 @@ Below are configurations in the configuration file.
 
 | **Variablies**      |   **Description**             |  **Note**            |
 |---------------------|-------------------------------|----------------------|
-| `SOURCE`            |  The directory where the source code is, or the URL of the git repository.      | Mounted to /source/ if it is a directory. |
-| `OUTPUT`            |  The directory where the packages will be in.        | Mounted to /output/ in the docker container. |
-| `SUDO`              |  Please set to `sudo` if you use a non-root user     | Default: None.  |
-| `VERSION`           |  The CloudStack version, branch name or commit SHA   | Default: None.  |
-| `BUILD_OPTS`        |  The build options. Refer to `Build Options`         | Default: None.  |
+| `SOURCE`            |  The directory where the source code is, or the URL of the git repository.      | Mounted to /source/ if it is a directory |
+| `OUTPUT`            |  The directory where the packages will be in.        | Mounted to /output/ in the docker container |
+| `SUDO`              |  Please set to `sudo` if you use a non-root user     | Default: None  |
+| `VERSION`           |  The CloudStack version, branch name or commit SHA   | Default: None  |
+| `BUILD_OPTS`        |  The build options. Refer to `Build Options`         | Default: `"-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware"`  |
+| `PACKAGE_OPTS`      |  The options for `package.sh` (RPM only)             | Default: None  |
 
-A sample of environment variables can be found at `config.ubuntu.sample`.
+Samples of environment variables can be found at 
+- `config.ubuntu.sample`
+- `config.rocky8.sample`
 
 ### 2. Build packages with parameters
 
@@ -108,11 +111,23 @@ $SUDO docker run -ti \
 
 | **OS**      |   **Option**       |  **Note**            |
 |-------------|--------------------|----------------------|
-| Ubuntu      | -Dnoredist         | Support non-Open Source Software (e.g. VMware) |
+| Ubuntu/Rocky8      | -Dnoredist         | Support non-Open Source Software (e.g. VMware) |
 |             | -DskipTests        | Skip unit tests      |
 |             | -Dsystemvm-kvm     | Bundle with SystemVM template for KVM |
 |             | -Dsystemvm-vmware  | Bundle with SystemVM template for VMware |
 |             | -Dsystemvm-xen     | Bundle with SystemVM template for XenServer/XCP-ng |
 
 
-The default value for ubuntu images is `-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware`
+The default value is `-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware`
+
+## Package Options (RPM only)
+
+More details for RPM build can be found at https://github.com/apache/cloudstack/blob/main/packaging/package.sh
+
+| **OS**      |   **Option**       |  **Note**            |
+|-------------|--------------------|----------------------|
+| Rocky 8     | -p, --pack         | Define which type of libraries to package ("oss"|"OSS"|"noredist"|"NOREDIST") (default "oss")      |
+|             | -T, --use-timestamp | Use epoch timestamp instead of SNAPSHOT in the package name (if not provided, use "SNAPSHOT") |
+|             | -t, --templates     | Passes necessary flag to package the required templates. Comma separated string - kvm,xen,vmware,ovm,hyperv  |
+
+The default value for rocky images is ``
