@@ -34,7 +34,7 @@ Below are configurations in the configuration file.
 | `OUTPUT`            |  The directory where the packages will be in.        | Mounted to /output/ in the docker container |
 | `SUDO`              |  Please set to `sudo` if you use a non-root user     | Default: None  |
 | `VERSION`           |  The CloudStack version, branch name or commit SHA   | Default: None  |
-| `BUILD_OPTS`        |  The build options. Refer to `Build Options`         | Default: `"-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware"`  |
+| `BUILD_OPTS`        |  The build options. Refer to `Build Options`         | Default: `"-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware -T2"`  |
 | `PACKAGE_OPTS`      |  The options for `package.sh` (RPM only)             | Default: None  |
 
 Samples of environment variables can be found at 
@@ -116,9 +116,10 @@ $SUDO docker run -ti \
 |             | -Dsystemvm-kvm     | Bundle with SystemVM template for KVM |
 |             | -Dsystemvm-vmware  | Bundle with SystemVM template for VMware |
 |             | -Dsystemvm-xen     | Bundle with SystemVM template for XenServer/XCP-ng |
+|             | -T n               | Builds with n threads |
 
 
-The default value is `-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware`
+The default value is `-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware -T2`
 
 ## Package Options (RPM only)
 

@@ -7,7 +7,7 @@ javac -version
 
 SOURCE_DIR=/source/
 OUTPUT_DIR=/output/
-BUILD_OPTS_DEFAULT="-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware"
+BUILD_OPTS_DEFAULT="-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware -T2"
 
 SOURCE=${SOURCE:-}
 VERSION=${VERSION:-}
