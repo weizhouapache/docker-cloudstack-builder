@@ -4,10 +4,11 @@ This repository maintains the Dockerfile and scripts to build Apache CloudStack 
 
 ## Compatibility matrix
 
-| **Dockerfile**      |   **CloudStack versions**     |  **Note**            |
+| **Docker image**      |   **CloudStack versions**     |  **Note**            |
 |---------------------|-------------------------------|----------------------|
 | ubuntu2204.v1       | 4.18.x, 4.19.x                | DEB packages for Ubuntu distros   |
-| rocky8.v1           | 4.18.x, 4.19.x                | RPM packages for RHEL/Rocky Linux/AlmaLinux/OracleLinux distros   |
+| rocky8.v1           | 4.18.x, 4.19.x                | RPM packages for RHEL/Rocky Linux/AlmaLinux/OracleLinux 8/9 distros   |
+| centos7.v1          | 4.18.x, 4.19.x                | RPM packages for RHEL 7 / CentOS 7 distros   |
 
 ## Usage
 
@@ -37,9 +38,10 @@ Below are configurations in the configuration file.
 | `BUILD_OPTS`        |  The build options. Refer to `Build Options`         | Default: `"-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware -T2"`  |
 | `PACKAGE_OPTS`      |  The options for `package.sh` (RPM only)             | Default: None  |
 
-Samples of environment variables can be found at 
+Samples of environment variables to build latest `main` branch can be found at 
 - `config.ubuntu.sample`
 - `config.rocky8.sample`
+- `config.centos7.sample`
 
 ### 2. Build packages with parameters
 
@@ -127,8 +129,8 @@ More details for RPM build can be found at https://github.com/apache/cloudstack/
 
 | **OS**      |   **Option**       |  **Note**            |
 |-------------|--------------------|----------------------|
-| Rocky 8     | -p, --pack         | Define which type of libraries to package ("oss"|"OSS"|"noredist"|"NOREDIST") (default "oss")      |
+| Rocky 8     | -p, --pack         | Define which type of libraries to package ("oss"\|"OSS"\|"noredist"\|"NOREDIST") (default "oss")      |
 |             | -T, --use-timestamp | Use epoch timestamp instead of SNAPSHOT in the package name (if not provided, use "SNAPSHOT") |
 |             | -t, --templates     | Passes necessary flag to package the required templates. Comma separated string - kvm,xen,vmware,ovm,hyperv  |
 
-The default value for rocky images is ``
+The default value is not set.
