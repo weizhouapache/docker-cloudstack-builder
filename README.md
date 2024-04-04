@@ -2,6 +2,19 @@
 
 This repository maintains the Dockerfile and scripts to build Apache CloudStack in docker images.
 
+Contents
+=================
+
+<!--ts-->
+   * [Compatibility matrix](#compatibility-matrix)
+   * [Usage](#Usage)
+      * [Build packages with configuration file](#1-build-packages-with-configuration-file)
+      * [Build packages with parameters](#2-build-packages-with-parameters)
+      * [Build packages by docker command](#3-build-packages-by-docker-command)
+   * [Build Options](#build-options)
+   * [Package Options (RPM only)](#package-options-rpm-only)
+<!--te-->
+
 ## Compatibility matrix
 
 | **Docker image**      |   **CloudStack versions**     |  **Note**            |
