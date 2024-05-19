@@ -1,6 +1,6 @@
 # docker-cloudstack-builder
 
-This repository maintains the Dockerfile and scripts to build Apache CloudStack in docker images.
+This repository maintains the Dockerfile and scripts to build Apache CloudStack in docker containers.
 
 Contents
 =================
@@ -17,11 +17,12 @@ Contents
 
 ## Compatibility matrix
 
-| **Docker image**      |   **CloudStack versions**     |  **Note**            |
-|---------------------|-------------------------------|----------------------|
-| ubuntu2204.v1       | 4.18.x, 4.19.x                | DEB packages for Ubuntu distros   |
-| rocky8.v1           | 4.18.x, 4.19.x                | RPM packages for RHEL/Rocky Linux/AlmaLinux/OracleLinux 8/9 distros   |
-| centos7.v1          | 4.18.x, 4.19.x                | RPM packages for RHEL 7 / CentOS 7 distros   |
+| **Docker image**    |   **CloudStack versions**     | **Software Versions** |  **Note**            |
+|---------------------|-------------------------------|-----------------------|----------------------|
+| **ubuntu2404.v1**   | 4.18.x, 4.19.x                | JDK 11, nodejs 16     | DEB packages for Ubuntu distros   |
+| **ubuntu2204.v1**   | 4.18.x, 4.19.x                | JDK 11, nodejs 14     | DEB packages for Ubuntu distros   |
+| **rocky8.v1**       | 4.18.x, 4.19.x                | JDK 11, nodejs 14     | RPM packages for RHEL/Rocky Linux/AlmaLinux/OracleLinux 8/9 distros   |
+| **centos7.v1**      | 4.18.x, 4.19.x                | JDK 11, nodejs 14     | RPM packages for RHEL 7 / CentOS 7 distros   |
 
 ## Usage
 
@@ -30,8 +31,9 @@ Contents
 The pre-built image can be found at https://hub.docker.com/repository/docker/weizhouapache/cloudstack-builder
 
 ```
-cd ubuntu2204.v1
-docker build -f Dockerfile -t weizhouapache/cloudstack-builder:ubuntu2204.v1 .
+image=ubuntu2204.v1
+cd $image
+docker build -f Dockerfile -t weizhouapache/cloudstack-builder:$image .
 ```
 
 ### 1. Build packages with configuration file
@@ -51,10 +53,11 @@ Below are configurations in the configuration file.
 | `BUILD_OPTS`        |  The build options. Refer to `Build Options`         | Default: `"-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware -T2"`  |
 | `PACKAGE_OPTS`      |  The options for `package.sh` (RPM only)             | Default: None  |
 
-Samples of environment variables to build latest `main` branch can be found at 
-- `config.ubuntu.sample`
-- `config.rocky8.sample`
-- `config.centos7.sample`
+Samples of configuration file to build latest `main` branch can be found at 
+- `config.ubuntu2204.v1.sample`
+- `config.ubuntu2404.v1.sample`
+- `config.rocky8.v1.sample`
+- `config.centos7.v1.sample`
 
 ### 2. Build packages with parameters
 
@@ -74,10 +77,10 @@ Usage: ./build.sh
 
 Examples
 ```
-# Build from a local directory
+# Build from a local directory and copy packages to /tmp
 ./build.sh -i ubuntu2204.v1 -s /data/cloudstack -o /tmp -b "-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware"
 
-# Build from git repository
+# Use sudo to build from git repository and copy packages to /tmp
 ./build.sh -i ubuntu2204.v1 -s https://github.com/apache/cloudstack.git -o /tmp -v main -b "-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware" -u
 ```
 
@@ -122,16 +125,17 @@ $SUDO docker run -ti \
     -e BUILD_OPTS \
     weizhouapache/cloudstack-builder:ubuntu2204.v1
 ```
+
 ## Build Options
 
-| **OS**      |   **Option**       |  **Note**            |
-|-------------|--------------------|----------------------|
-| Ubuntu/Rocky8      | -Dnoredist         | Support non-Open Source Software (e.g. VMware) |
-|             | -DskipTests        | Skip unit tests      |
-|             | -Dsystemvm-kvm     | Bundle with SystemVM template for KVM |
-|             | -Dsystemvm-vmware  | Bundle with SystemVM template for VMware |
-|             | -Dsystemvm-xen     | Bundle with SystemVM template for XenServer/XCP-ng |
-|             | -T n               | Builds with n threads |
+| **OS**       |   **Option**       |  **Note**            |
+|--------------|--------------------|----------------------|
+| Ubuntu/Rocky | -Dnoredist         | Support non-Open Source Software (e.g. VMware) |
+|              | -DskipTests        | Skip unit tests      |
+|              | -Dsystemvm-kvm     | Bundle with SystemVM template for KVM |
+|              | -Dsystemvm-vmware  | Bundle with SystemVM template for VMware |
+|              | -Dsystemvm-xen     | Bundle with SystemVM template for XenServer/XCP-ng |
+|              | -T n               | Builds with n threads |
 
 
 The default value is `-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware -T2`
@@ -140,9 +144,9 @@ The default value is `-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsys
 
 More details for RPM build can be found at https://github.com/apache/cloudstack/blob/main/packaging/package.sh
 
-| **OS**      |   **Option**       |  **Note**            |
-|-------------|--------------------|----------------------|
-| Rocky 8     | -p, --pack         | Define which type of libraries to package ("oss"\|"OSS"\|"noredist"\|"NOREDIST") (default "oss")      |
+| **OS**      |   **Option**        |  **Note**            |
+|-------------|---------------------|----------------------|
+| Rocky 8     | -p, --pack          | Define which type of libraries to package ("oss"\|"OSS"\|"noredist"\|"NOREDIST") (default "oss")      |
 |             | -T, --use-timestamp | Use epoch timestamp instead of SNAPSHOT in the package name (if not provided, use "SNAPSHOT") |
 |             | -t, --templates     | Passes necessary flag to package the required templates. Comma separated string - kvm,xen,vmware,ovm,hyperv  |
 
