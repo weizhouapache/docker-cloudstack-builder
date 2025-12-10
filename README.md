@@ -19,7 +19,9 @@ Contents
 
 | **Docker image**    |   **CloudStack versions**     | **Software Versions** |  **Note**            |
 |---------------------|-------------------------------|-----------------------|----------------------|
-| **ubuntu2404.v1**   | 4.18.x, 4.19.x                | JDK 11, nodejs 16     | DEB packages for Ubuntu distros   |
+| **ubuntu2404.v2**   | 4.22.x                        | JDK 17, nodejs 20     | DEB packages for Ubuntu distros   |
+| **rocky9.v1**       | 4.22.x                        | JDK 17, nodejs 20     | RPM packages for RHEL/Rocky Linux/AlmaLinux/OracleLinux 8/9/10 distros   |
+| **ubuntu2404.v1**   | 4.18.x, 4.19.x, 4.20.x, 4.21  | JDK 11, nodejs 16     | DEB packages for Ubuntu distros   |
 | **ubuntu2204.v1**   | 4.18.x, 4.19.x                | JDK 11, nodejs 14     | DEB packages for Ubuntu distros   |
 | **rocky8.v1**       | 4.18.x, 4.19.x                | JDK 11, nodejs 14     | RPM packages for RHEL/Rocky Linux/AlmaLinux/OracleLinux 8/9 distros   |
 | **centos7.v1**      | 4.18.x, 4.19.x                | JDK 11, nodejs 14     | RPM packages for RHEL 7 / CentOS 7 distros   |

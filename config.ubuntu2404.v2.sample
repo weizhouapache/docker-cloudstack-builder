@@ -1,0 +1,25 @@
+
+# The repository of the image. Default is weizhouapache/cloudstack-builder
+REPO=weizhouapache/cloudstack-builder
+
+# The name of the image
+IMAGE=ubuntu2404.v2
+
+# The source directory or git repository
+# This will be mounted or cloned to /source the docker container.
+SOURCE=https://github.com/weizhouapache/cloudstack.git
+
+# The directory where the packages will be.
+# This will be mounted to /output the docker container.
+OUTPUT=/tmp
+
+# The CloudStack version, branch name or commit SHA.
+VERSION=4.22-fix-build-on-ubuntu24
+
+# The build options.
+# The default value for is "-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware"
+# Please refer to https://github.com/weizhouapache/docker-cloudstack-builder/blob/main/README.md
+BUILD_OPTS="-DskipTests"
+
+# Please set to sudo if use a non-root user	
+SUDO=
