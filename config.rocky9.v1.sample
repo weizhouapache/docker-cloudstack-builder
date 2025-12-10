@@ -19,7 +19,7 @@ VERSION=4.22.0.0
 # The build options.
 # The default value for is "-Dnoredist -DskipTests -Dsystemvm-kvm -Dsystemvm-xen -Dsystemvm-vmware"
 # Please refer to https://github.com/weizhouapache/docker-cloudstack-builder/blob/main/README.md
-BUILD_OPTS="-DskipTests"
+BUILD_OPTS=
 
 # The options for `package.sh` (RPM only)
 # Please refer to https://github.com/apache/cloudstack/blob/main/packaging/package.sh
