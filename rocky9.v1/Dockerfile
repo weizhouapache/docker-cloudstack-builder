@@ -7,7 +7,7 @@ RUN         yum install -y which mlocate java-17-openjdk java-17-openjdk-devel m
             && alternatives --set javac java-17-openjdk.x86_64
 
 RUN         curl -sL https://rpm.nodesource.com/setup_20.x | bash - \
-            && yum install -y nodejs
+            && yum install -y nodejs g++
 
 COPY        entrypoint.sh /entrypoint.sh
 
