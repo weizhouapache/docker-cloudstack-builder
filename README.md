@@ -31,7 +31,7 @@ Contents
 
 ### (Optional) Build docker image 
 
-The pre-built image can be found at https://hub.docker.com/repository/docker/weizhouapache/cloudstack-builder
+The pre-built images can be found at https://hub.docker.com/r/weizhouapache/cloudstack-builder
 
 ```
 image=ubuntu2204.v1
