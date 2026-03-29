@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 # Print system information
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk/
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk/
 mvn -version
 java --version
 javac -version
@@ -36,7 +36,7 @@ if [ ! -z "$VERSION" ]; then
 fi
 
 # Packaging
-FLAGS=$BUILD_OPTS packaging/package.sh -d centos7 $PACKAGE_OPTS
+NODE_OPTIONS=--openssl-legacy-provider FLAGS=$BUILD_OPTS packaging/package.sh -d centos8 $PACKAGE_OPTS
 
 if [ -d "$SOURCE_DIR/dist/rpmbuild/RPMS/x86_64/" ]; then
     mv $SOURCE_DIR/dist/rpmbuild/RPMS/x86_64/cloudstack-*.rpm $OUTPUT_DIR

@@ -38,7 +38,12 @@ fi
 # Packaging
 FLAGS=$BUILD_OPTS packaging/package.sh -d centos8 $PACKAGE_OPTS
 
-mv $SOURCE_DIR/dist/rpmbuild/RPMS/x86_64/cloudstack-*.rpm $OUTPUT_DIR
+if [ -d "$SOURCE_DIR/dist/rpmbuild/RPMS/x86_64/" ]; then
+    mv $SOURCE_DIR/dist/rpmbuild/RPMS/x86_64/cloudstack-*.rpm $OUTPUT_DIR
+elif [ -d "$SOURCE_DIR/dist/rpmbuild/RPMS/noarch/" ]; then
+    mv $SOURCE_DIR/dist/rpmbuild/RPMS/noarch/cloudstack-*.rpm $OUTPUT_DIR
+fi
+
 if [[ $SOURCE =~ http.* ]] || [[ $SOURCE =~ git.* ]]; then
     rm -rf $SOURCE_DIR
 fi
